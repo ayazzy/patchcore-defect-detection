@@ -1,0 +1,28 @@
+# Datasets (auto-downloaded by anomalib, large)
+datasets/
+
+# Training artifacts
+logs/
+results/
+lightning_logs/
+*.ckpt
+checkpoints/
+
+# The export dir holds intermediate weights; we only commit model/model.pt (see below)
+model/weights/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Run logs
+*.log
+
+# OS / editor
+.DS_Store
+
+# IMPORTANT: do NOT ignore the deployed model — the Space needs it.
+!model/model.pt

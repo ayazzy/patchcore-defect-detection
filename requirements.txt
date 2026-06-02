@@ -1,0 +1,10 @@
+anomalib==2.5.0
+# anomalib 2.5.0 predates pandas 3.0; under pandas 3.x its split-enum vs string
+# column comparison silently returns 0 rows (empty train/test sets). Pin <3.
+pandas<3
+gradio
+matplotlib
+pillow
+numpy
+torch
+torchvision
