@@ -1,3 +1,14 @@
+---
+title: PatchCore Defect Detection
+emoji: 🔩
+colorFrom: blue
+colorTo: red
+sdk: gradio
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # PatchCore visual defect detection
 
 Detect defects on manufactured parts **without ever labelling a defect**. The model learns what *good* parts look like, then flags and localises anything that deviates, with a heatmap of where.
