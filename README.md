@@ -11,9 +11,9 @@ license: mit
 
 # PatchCore visual defect detection
 
-[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/yazimov/matta-demo)
+[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/yazimov/patchcore-defect-detection)
 
-**[Try the live demo →](https://huggingface.co/spaces/yazimov/matta-demo)** Upload a metal-nut image or click an example to get a verdict, an anomaly score and a heatmap.
+**[Try the live demo →](https://huggingface.co/spaces/yazimov/patchcore-defect-detection)** Upload a metal-nut image or click an example to get a verdict, an anomaly score and a heatmap.
 
 Detect defects on manufactured parts **without ever labelling a defect**. The model learns what *good* parts look like, then flags and localises anything that deviates, with a heatmap of where.
 
