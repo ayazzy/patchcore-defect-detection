@@ -5,6 +5,10 @@ features extracted from defect-free training images. At inference time, anything
 that does not look like those good parts scores as anomalous. No defect labels
 are used during training.
 
+Pipeline: MVTec AD datamodule -> PatchCore (Wide ResNet-50, layers 2+3,
+coreset-subsampled memory bank) -> test metrics -> Torch export to
+model/weights/torch/model.pt, which app.py loads for inference.
+
 Usage:
     python train.py --category metal_nut
 """
