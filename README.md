@@ -1,5 +1,5 @@
 ---
-title: Matta-style Defect Detection POC
+title: PatchCore Defect Detection
 emoji: 🔩
 colorFrom: blue
 colorTo: red
@@ -9,38 +9,19 @@ pinned: false
 license: mit
 ---
 
-# Matta "Sentry"-style Defect Detection — Weekend POC
+# PatchCore visual defect detection
 
-A small, honest proof-of-concept of the approach behind [Matta's](https://www.matta.ai)
-**Sentry** product: **vision-based defect detection that learns from defect-free
-parts only**, instead of labelling defects.
+Detect defects on manufactured parts **without ever labelling a defect**. The model learns what *good* parts look like, then flags and localises anything that deviates, with a heatmap of where.
 
-> **Honest framing.** This is a weekend learning exercise I built to understand
-> Matta's problem, not a claim of original engineering. I assembled it with the help
-> of AI tools and I understand how every part works — it wires together Intel's
-> open-source [`anomalib`](https://github.com/openvinotoolkit/anomalib) library
-> (PatchCore model) and the public MVTec AD dataset into a tiny Gradio demo. The
-> interesting part here is the *approach*, not benchmark numbers or novel code.
+Built to understand how industrial vision inspection can be deployed quickly on a real production line, where a labelled catalogue of every possible defect never exists but good parts come off the line all day.
 
-## The idea: learn normality, don't label defects
+## How it works
 
-Conventional supervised defect detection needs a labelled library of every defect
-type — expensive to collect and always incomplete, because the next defect is the
-one you haven't seen.
+1. **Learn normality.** A Wide ResNet-50 backbone (ImageNet-pretrained, frozen) extracts mid-level patch features from defect-free images only. PatchCore keeps a coreset-subsampled **memory bank** of those patch embeddings, a compact description of "normal".
+2. **Score by distance.** At inference, each patch of a new image is compared with its nearest neighbour in the memory bank. The largest patch distance gives the image-level anomaly score, and the per-patch distances, upsampled, give the anomaly heatmap.
+3. **Decide.** The score is thresholded into Normal / Anomalous.
 
-The anomaly-detection approach flips this:
-
-1. **Train on good parts only.** PatchCore extracts mid-level features from
-   defect-free images and stores a compressed "memory bank" of what normal looks like.
-   No defect labels are used.
-2. **Score by deviation.** At inference, any region of a new part that doesn't match
-   the memory bank scores as anomalous — and you get a heatmap of *where*.
-
-**Why this is what enables fast, low-data factory deployment:** you rarely have a
-labelled catalogue of every possible defect, but you always have good parts coming
-off the line. Learning normality means you can stand up detection for a new part
-with very little data and zero labelling effort — which is exactly what makes it
-deployable on a real production line.
+No defect labels are used in training, which means a new part type can go from zero to working detection with a few hundred good images and no annotation effort.
 
 ## What this demo does
 
@@ -91,8 +72,12 @@ inference without retraining.
 | `model/model.pt` | The exported model the Space loads. |
 | `examples/` | A few good and defective sample images for the UI. |
 
+## What I built
+
+The end-to-end pipeline (training script, model export, inference app and heatmap overlay) on top of Intel's open-source [anomalib](https://github.com/openvinotoolkit/anomalib) PatchCore implementation, assembled over a weekend with AI coding tools. The value here is the deployment-oriented framing and a working, inspectable demo, not novel model research.
+
 ## Credit
 
-- Model & training: [anomalib](https://github.com/openvinotoolkit/anomalib) (Apache-2.0)
-- Dataset: MVTec AD (research/non-commercial license — see MVTec's terms)
-- Inspiration: [Matta](https://www.matta.ai) and their Sentry product
+- Model & training library: [anomalib](https://github.com/openvinotoolkit/anomalib) (Apache-2.0)
+- PatchCore: Roth et al., *Towards Total Recall in Industrial Anomaly Detection* (CVPR 2022)
+- Dataset: MVTec AD (research/non-commercial licence, see MVTec's terms)

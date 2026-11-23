@@ -79,10 +79,9 @@ def inspect(image: Image.Image):
 
 
 DESCRIPTION = """
-# Matta "Sentry"-style Defect Detection — Weekend POC
+# PatchCore Visual Defect Detection
 
-A small, honest proof-of-concept of **vision-based anomaly detection that learns
-from defect-free parts only** — the core idea behind Matta's *Sentry* product.
+**Vision-based anomaly detection that learns from defect-free parts only.**
 
 **How it works:** the model (PatchCore, via Intel's `anomalib`) was trained on
 images of *good* metal nuts only — **no defect labels**. It builds a memory bank of
@@ -104,7 +103,7 @@ def build_examples():
     return [[str(p)] for p in sorted(EXAMPLES_DIR.glob("*.png"))]
 
 
-with gr.Blocks(title="Matta-style Defect Detection POC") as demo:
+with gr.Blocks(title="PatchCore Defect Detection") as demo:
     gr.Markdown(DESCRIPTION)
     with gr.Row():
         with gr.Column():
